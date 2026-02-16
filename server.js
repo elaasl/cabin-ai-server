@@ -43,7 +43,6 @@ app.post("/generate-images", async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 3000;
 
 // IMPORTANT for Railway
 const PORT = process.env.PORT || 3000;
