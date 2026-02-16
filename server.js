@@ -1,6 +1,6 @@
-import express from "express";
-import cors from "cors";
-import OpenAI from "openai";
+const express = require("express");
+const cors = require("cors");
+const OpenAI = require("openai");
 
 const app = express();
 app.use(cors());
@@ -10,9 +10,11 @@ const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
 });
 
+// health check (Railway needs this FAST)
 app.get("/", (req, res) => {
-  res.send("Cabin AI server running");
+  res.status(200).send("OK");
 });
+
 app.post("/generate-images", async (req, res) => {
   try {
     const { prompts } = req.body;
@@ -42,6 +44,8 @@ app.post("/generate-images", async (req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, "0.0.0.0", () =>
-  console.log("Server running on port " + PORT)
-);
+
+// IMPORTANT for Railway
+app.listen(PORT, "0.0.0.0", () => {
+  console.log("Server running on port " + PORT);
+});
