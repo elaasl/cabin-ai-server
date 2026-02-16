@@ -46,6 +46,8 @@ app.post("/generate-images", async (req, res) => {
 const PORT = process.env.PORT || 3000;
 
 // IMPORTANT for Railway
-app.listen(process.env.PORT || 3000, () => {
-  console.log("Server running...");
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Server running on ${PORT}`);
 });
