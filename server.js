@@ -1,29 +1,23 @@
-import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import OpenAI from "openai";
-
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-if (!process.env.OPENAI_API_KEY) {
-  console.error("OPENAI_API_KEY missing");
-}
-
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
-});
-
-
-// health check (Railway needs this FAST)
+// ROUTE سريعة باش Railway يتأكد السيرفر حي
 app.get("/", (req, res) => {
-  res.status(200).send("OK");
+  res.status(200).send("Cabin AI server running");
 });
 
+// نخلي OpenAI يتخلق غير وقت الحاجة
 app.post("/generate-images", async (req, res) => {
   try {
+    const client = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY
+    });
+
     const { prompts } = req.body;
 
     if (!prompts || !Array.isArray(prompts)) {
@@ -50,11 +44,8 @@ app.post("/generate-images", async (req, res) => {
   }
 });
 
-
-// IMPORTANT for Railway
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, "0.0.0.0", () => {
   console.log("Server running on port " + PORT);
 });
-
