@@ -1,14 +1,21 @@
-const express = require("express");
-const cors = require("cors");
-const OpenAI = require("openai");
+import "dotenv/config";
+import express from "express";
+import cors from "cors";
+import OpenAI from "openai";
+
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
+if (!process.env.OPENAI_API_KEY) {
+  console.error("OPENAI_API_KEY missing");
+}
+
 const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
 });
+
 
 // health check (Railway needs this FAST)
 app.get("/", (req, res) => {
