@@ -13,6 +13,9 @@ const client = new OpenAI({
 app.get("/", (req, res) => {
   res.send("Cabin AI server running");
 });
+app.get("/", (req, res) => {
+  res.send("Cabin AI server running");
+});
 
 app.post("/generate-images", async (req, res) => {
   try {
